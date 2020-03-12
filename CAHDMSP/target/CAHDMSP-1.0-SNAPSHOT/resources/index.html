@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="renderer" content="webkit">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<title>长安医院药品管理服务平台</title>
+<link rel="Shortcut Icon" href="/resources/images/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/resources/js/jquery-easyui-1.4/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/resources/js/jquery-easyui-1.4/themes/icon.css" />
+<script language="javascript" src="/resources/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/resources/js/jquery-easyui-1.4/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/resources/js/jquery-easyui-1.4/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/resources/js/common.js"></script>
+<script language="javascript" src="/resources/js/jquery.jqprint-0.3.js"></script>
+<script type="text/javascript" src="/resources/myjs/guanli.js"></script>
+<script type="text/javascript" src="/resources/myjs/luru.js"></script>
+<script type="text/javascript" src="/resources/myjs/liulan.js"></script>
+<script type="text/javascript" src="/resources/myjs/record.js"></script>
+<script type="text/javascript" src="/resources/myjs/user.js"></script>
+<script type="text/javascript" src="/resources/myjs/Help.js"></script>
+</head>
+<body >
+    <!-- layout布局 -->
+    <div  class="easyui-layout" data-options="fit:true">
+    <!-- 顶部   -->
+    <div id="north" style="background-size:cover;
+        background-image: url(/resources/images/title.png);background-size:100%auto;background-position: -35px;"
+        data-options="region:'north',split:true,border:false,height:'12%',disabled:true">
+
+        <div style="margin-left: 80%; margin-top: 2%; font-size: 18px;color: #fe7966">
+            欢迎使用～<span id="loginName" ></span>
+            <span style="font-size: 18px;color: #86d2c6">
+            &nbsp;&nbsp;
+                >>><a href="javascript:logOff()">退&nbsp;出</a></span>
+        </div>
+    
+    </div> 
+    <!-- 菜单 -->
+    <div data-options="region:'west',title:'菜单',split:true,height:'86%',
+        width:'209',disabled:true " style="background:#eee">
+        <div id="accordion" class="easyui-accordion" data-options="selected:-1">
+            <!-- 用户管理 -->
+            <div title="用户管理" id="UM" data-options="iconCls:'icon-user_key'">
+                <a  href="javascript:UMclick()" class="easyui-linkbutton" data-options="iconCls:'icon-user_key'" style="width: 100%">添加/删除用户</a>
+            </div>
+            <!-- 信息录入-LRD-LRF-LRB   -->
+            <div title="信息录入" id="LR" data-options="iconCls:'icon-edit'">
+                <a  href="javascript:LRDclick()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" style="width: 100%">录入药品信息</a>
+                <a  href="javascript:LRFclick()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" style="width: 100%">录入药厂信息</a>
+                <a  href="javascript:LRBclick()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" style="width: 100%">录入采购人信息</a>
+            </div>
+            <!-- 信息浏览-LLD-LLF-LLB -->
+            <div title="信息浏览" id="LL" data-options="iconCls:'icon-search'">
+                <a  href="javascript:LLDclick()" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width: 100%">浏览药品信息</a>
+                <a  href="javascript:LLFclick()" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width: 100%">浏览药厂信息</a>
+                <a  href="javascript:LLBclick()" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width: 100%">浏览采购人信息</a>
+            </div>
+            <!-- 信息管理-GLD-GLF-GLB -->
+            <div title="信息管理" id="GL" data-options="iconCls:'icon-cut'" >
+                <a  href="javascript:GLDclick()" class="easyui-linkbutton" data-options="iconCls:'icon-cut'" style="width: 100%">管理药品信息</a>
+                <a  href="javascript:GLFclick()" class="easyui-linkbutton" data-options="iconCls:'icon-cut'" style="width: 100%">管理药厂信息</a>
+                <a  href="javascript:GLBclick()" class="easyui-linkbutton" data-options="iconCls:'icon-cut'" style="width: 100%">管理采购人信息</a>
+            </div>
+
+            <!-- 库存记录 -->
+            <div title="库存记录" id="RC" data-options="iconCls:'icon-printer'">
+                <a  href="javascript:INRCclick()" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" style="width: 100%">查看入库记录</a>
+                <a  href="javascript:OUTRCclick()" class="easyui-linkbutton" data-options="iconCls:'icon-undo'" style="width: 100%">查看出库记录</a>
+            </div>
+
+            <!-- 系统帮助  -->
+            <div title="系统帮助" data-options="iconCls:'icon-help'">
+                <a  href="javascript:closeAll()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',width:200">关闭全部窗口</a>
+                <a  href="javascript:helpclick()" class="easyui-linkbutton" data-options="iconCls:'icon-tip'" style="width: 100%">系统帮助</a>
+            </div>  
+        </div>  
+    </div>
+
+<!-- 输出体    -->
+    <div id="output" class="easyui-tabs"
+         data-options="tools:'#tt1',region:'center',fit:true,height:'86%',border:true,"
+         style="background:#eee">
+     </div>   
+</div> 
+
+<div id='Loading' style="position:absolute;z-index:700;top:0px;left:0px;width:100%;height:100%;background:#DDDDDB;text-align:center;padding-top: 20%;"><h1><image src='images/load.gif'/><font size="50px" color="#3C89DF">Loding···</font></h1></div>
+</body>
+
+<script type="text/javascript">
+    var quanXian;
+    $(function(){
+         $.ajax({
+             url: '../../login/getLoginName',
+             success: function (data) {
+                 if(data.code != 0) {
+                     $.messager.alert('','<br>账号异常,请重新登陆','error', function () {
+                             location.href="../login.html";
+                     });
+                 }
+                 $("#loginName").html(data.data.userName);
+                 quanXian = data.data.quanXian;
+             },
+             error: function (jqXHR, textStatus, errorThrown) {
+                 $.messager.alert('','<br>账号异常,请重新登陆','error', function () {
+                     location.href="../login.html";
+                 });
+             }
+    });
+
+    });
+    function closes(){
+    	$("#Loading").fadeOut("normal",function(){
+    		$(this).remove();
+    	});
+    }
+    var pc;
+    $.parser.onComplete = function(){
+    	if(pc) clearTimeout(pc);
+    	pc = setTimeout(closes, 1000);
+    }
+</script>
+</html>

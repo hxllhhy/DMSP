@@ -1,0 +1,113 @@
+<!-- 用户管理页面 -->
+<table id="dg" title="注意:药品管理员只能对取药员用户进行操作" class="easyui-datagrid" style="width:86%"
+        url="../user/showAllUser" toolbar="#toolbar" pagination="true"
+        rownumbers="true" fitColumns="true" singleSelect="true"
+        data-options="pageSize:5,pageList:[5,10,15]">
+    <thead>
+        <tr>
+            <th field="userName" width="15%">用户名</th>
+            <th field="passWord" width="15%">密码</th>
+            <th field="quanXian" width="71%">身份（0为药品管理员）</th>
+        </tr>
+    </thead>
+</table>
+
+<div id="toolbar">
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addUser()">添加取药员</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">删除取药员</a>
+</div>
+
+<div id="dlg" class="easyui-dialog" style="width:400px"
+        closed="true" buttons="#dlg-buttons"
+        data-options="iconCls:'icon-save',modal:true,draggable:false">
+    <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">取药员信息</div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" id="userName" style="width:100%"
+                   data-options="prompt:'请输入用户名:最长12位'">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" id="passWord" style="width:100%"
+                   data-options="prompt:'请输入密码:最长12位'">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" id="passWord2" style="width:100%"
+                   data-options="prompt:'请再次输入密码'">
+        </div>
+    </form>
+</div>
+
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">提交</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
+</div>
+<script type="text/javascript">
+    function addUser(){
+        $('#dlg').dialog('open').dialog('center');
+        $('#fm').form('clear');
+    }
+
+    function saveUser(){
+        var userNameInput = $("#userName").val().replace(/\s*/g,'');
+        var passWordInput = $("#passWord").val().replace(/\s*/g,'');
+        var passWordInput2 = $("#passWord2").val().replace(/\s*/g,'');
+        if(userNameInput == "") {
+            $.messager.alert('提示','用户名不能为空','warning');
+            return;
+        }
+        if(userNameInput.length > 12) {
+            $.messager.alert('提示','用户名不得超过12位','warning');
+            return;
+        }
+        if(passWordInput == "") {
+            $.messager.alert('提示','密码不能为空','warning');
+            return;
+        }
+        if(passWordInput.length > 12) {
+            $.messager.alert('提示','密码不得超过12位','warning');
+            return;
+        }
+        if(passWordInput2 != passWordInput) {
+            $.messager.alert('提示','请确认密码是否一致','warning');
+            return;
+        }
+        $.post('../user/addUser', {
+            userName:userNameInput,
+            passWord:passWordInput
+        }, function(data) {
+            if(data.code != 0) $.messager.alert('提示',data.msg,'error');
+            else {
+                $.messager.alert('提示','添加成功','info');
+                $('#dlg').dialog('close');
+                $('#dg').datagrid('reload');
+            }
+        });
+    }
+    function destroyUser() {
+        var row = $('#dg').datagrid('getSelected');
+        if(row == null){
+            $.messager.alert('提示','请点击要删除的用户', 'warning');
+            return;
+        }
+        if(row.quanXian == 0) {
+            $.messager.alert('提示','药品管理员不可删除', 'warning');
+            return;
+        }
+        if(row) {
+            $.messager.confirm('提示','确定删除该用户吗?',function(r) {
+                if(r){
+                    $.post('../user/destroyUser',{
+                        userName:row.userName
+                    },function(data){
+                        if(data.code != 0) $.messager.alert('提示',data.msg,'error');
+                        else {
+                            $.messager.alert('提示','删除成功','info');
+                            $('#dg').datagrid('reload');
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+</script>

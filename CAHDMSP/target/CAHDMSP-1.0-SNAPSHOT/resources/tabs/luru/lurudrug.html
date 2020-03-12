@@ -1,0 +1,163 @@
+<div  style="margin: 2% 0px 0px 30%">
+  <div class="easyui-panel" title="药品信息录入"
+       data-options="iconCls:'icon-group'"
+       style=" background:  #FFFFFF;
+    max-width:400px;padding:30px 60px;">
+    <!-- 录入按钮 -->
+    <div>
+      <a href="javascript:LRDclick()" class="easyui-linkbutton"
+         iconCls="icon-ok" style="width:100%">点我录入</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- 录入信息对话框 -->
+<div id="LRDdialog" class="easyui-dialog" style="width:600px"
+     closed="true" buttons="#dlg-buttons"
+     data-options="iconCls:'icon-save',modal:true,draggable:false">
+  <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
+  <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">录入药品信息</div>
+    <div style="margin-bottom:10px">
+      名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      称：<input class="easyui-textbox" id="LRdrugName" style="width:81%; height: 23px"
+               data-options="multiline:true">
+    </div>
+    <div style="margin-bottom:10px">
+      价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      格：<input class="easyui-textbox" id="LRdrugPrice" style="width:81%; height: 23px">
+    </div>
+    <div style="margin-bottom:10px">
+      库&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      存：<input class="easyui-textbox" id="LRdrugNum" style="width:81%; height: 23px"
+               data-options="multiline:true">
+    </div>
+    <div style="margin-bottom:10px">
+      成&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      份：<input class="easyui-textbox" id="LRchengFen" style="width:81%; height: 44px"
+               data-options="multiline:true">
+    </div>
+    <div style="margin-bottom:10px">
+      性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      状：<input class="easyui-textbox" id="LRxingZhuang" style="width:81%; height: 44px"
+               data-options="multiline:true">
+    </div>
+    <div style="margin-bottom:10px">
+      用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      法：<input class="easyui-textbox" id="LRyongFa" style="width:81%; height: 23px"
+               data-options="multiline:true">
+    </div>
+    <div style="margin-bottom:10px">
+      功&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      效：<input class="easyui-textbox" id="LRgongXiao" style="width:81%; height: 44px"
+               data-options="multiline:true">
+    </div>
+    <div style="margin-bottom:10px">
+      厂家&nbsp;&nbsp;&nbsp;
+      编号：<input class="easyui-textbox" id="LRfactoryId" style="width:81%; height: 23px">
+    </div>
+    <div style="margin-bottom:10px">
+      采购人编号：
+      <input class="easyui-textbox" id="LRbuyerId" style="width:81%; height: 23px">
+    </div>
+  </form>
+</div>
+<div id="dlg-buttons">
+  <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="LRDsave()" style="width:90px">提交</a>
+  <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#LRDdialog').dialog('close')" style="width:90px">取消</a>
+</div>
+
+<script type="text/javascript">
+    function LRDclick() {
+        $('#LRDdialog').dialog('open');
+    }
+    function LRDsave() {
+        var LRdrugNameInput = $("#LRdrugName").textbox('getValue').replace(/\s*/g,'');
+        var LRdrugPriceInput = $("#LRdrugPrice").textbox('getValue').replace(/\s*/g,'');
+        var LRdrugNumInput = $("#LRdrugNum").textbox('getValue').replace(/\s*/g,'');
+        var LRchengFenInput = $("#LRchengFen").textbox('getValue').replace(/\s*/g,'');
+        var LRxingZhuangInput = $("#LRxingZhuang").textbox('getValue').replace(/\s*/g,'');
+        var LRyongFaInput = $("#LRyongFa").textbox('getValue').replace(/\s*/g,'');
+        var LRgongXiaoInput = $("#LRgongXiao").textbox('getValue').replace(/\s*/g,'');
+        var LRfactoryIdInput = $("#LRfactoryId").textbox('getValue').replace(/\s*/g,'');
+        var LRbuyerIdInput = $("#LRbuyerId").textbox('getValue').replace(/\s*/g,'');
+        
+        if(LRdrugNameInput == "") {
+            $.messager.alert('提示','名称不能为空','warning');
+            return;
+        }
+        if(LRdrugPriceInput == "") {
+            $.messager.alert('提示','单价不能为空','warning');
+            return;
+        }
+        if(LRdrugPriceInput <= 0) {
+            $.messager.alert('提示','单价必须大于0','warning');
+            return;
+        }
+        if(LRdrugNumInput == "") {
+            $.messager.alert('提示','库存数不能为空','warning');
+            return;
+        }
+        if(LRdrugNumInput <= 0) {
+            $.messager.alert('提示','库存数必须大于0','warning');
+            return;
+        }
+        if(LRchengFenInput == "") {
+            $.messager.alert('提示','成份不能为空','warning');
+            return;
+        }
+        if(LRchengFenInput.length > 128) {
+            $.messager.alert('提示','成份不能超过128个字','warning');
+            return;
+        }
+        if(LRxingZhuangInput == "") {
+            $.messager.alert('提示','性状不能为空','warning');
+            return;
+        }
+        if(LRxingZhuangInput.length > 128) {
+            $.messager.alert('提示','性状不能超过128个字','warning');
+            return;
+        }
+        if(LRyongFaInput == "") {
+            $.messager.alert('提示','用法不能为空','warning');
+            return;
+        }
+        if(LRyongFaInput.length > 128) {
+            $.messager.alert('提示','用法不能超过128个字','warning');
+            return;
+        }
+        if(LRgongXiaoInput == "") {
+            $.messager.alert('提示','功效不能为空','warning');
+            return;
+        }
+        if(LRgongXiaoInput.length > 512) {
+            $.messager.alert('提示','功效不能超过512个字','warning');
+            return;
+        }
+        if(LRfactoryIdInput == "") {
+            $.messager.alert('提示','厂家编号不能为空','warning');
+            return;
+        }
+        if(LRbuyerIdInput == "") {
+            $.messager.alert('提示','采购人编号不能为空','warning');
+            return;
+        }
+        $.post('../drug/enterDrug', {
+            drugName:LRdrugNameInput,
+            drugPrice:LRdrugPriceInput,
+            drugNum:LRdrugNumInput,
+            chengFen:LRchengFenInput,
+            xingZhuang:LRxingZhuangInput,
+            yongFa:LRyongFaInput,
+            gongXiao:LRgongXiaoInput,
+            factoryId:LRfactoryIdInput,
+            buyerId:LRbuyerIdInput
+        }, function(data) {
+            if(data.code != 0) $.messager.alert('提示',data.msg,'error');
+            else {
+                $.messager.alert('提示','录入成功','info');
+                $('#LRDdialog').dialog('close');
+            }
+        });
+    }
+</script>

@@ -1,0 +1,20 @@
+<!-- 药品入库记录 -->
+<table class="easyui-datagrid" data-options="striped:true,pagination:true,
+         url:'../inrecord/showAllInrecord',pageSize:5,pageList:[5,10,15]" style="width: 86%">
+    <thead>
+        <tr>
+            <th data-options="field:'inrecordId',formatter:showText" width=10%>入库记录编号</th>
+            <th data-options="field:'indrugId',formatter:showText" width=10%>药品编号</th>
+            <th data-options="field:'indrugName',formatter:showText" width=10%>药品名称</th>
+            <th data-options="field:'indrugNum',formatter:showText" width=10%>入库数量</th>
+            <th data-options="field:'indrugPriceall',formatter:showText" width=10%>总金额</th>
+            <th data-options="field:'inTime',formatter:showText" width=51%>入库时间</th>
+        </tr>
+      </thead>
+</table>
+
+<script>
+    function showText(value) {
+		return '<div style="width=100px;word-break:break-all; word-wrap:break-word;white-space:pre-wrap;">'+value+'</div>';
+    }
+</script>

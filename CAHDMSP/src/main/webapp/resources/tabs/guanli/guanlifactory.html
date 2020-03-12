@@ -1,0 +1,182 @@
+<!-- 查询药厂信息 -->
+<div  style="margin: 2% 0px 0px 30%">
+  <div class="easyui-panel" title="药厂编号查询"
+  data-options="iconCls:'icon-search'"
+  style=" background:  #FFFFFF;
+    max-width:400px;padding:30px 60px;">
+    <div style="margin-bottom:20px">
+        <input id="CXFId" class="easyui-textbox"
+         labelPosition="top" 
+        data-options="prompt:'请输入药厂编号'"
+        style="width:100%;height:35px">
+    </div>
+    <!-- 查询按钮 -->
+    <div>
+        <a href="javascript:CXFIdclick()" class="easyui-linkbutton"
+        iconCls="icon-ok" style="width:100%">查询</a>
+    </div>
+  </div>
+</div>
+<!-- 查询结束 -->
+
+<!-- 信息管理对话框 -->
+<div class="easyui-dialog" title="药厂信息" closed="true" id="GLFdialog"
+data-options="iconCls:'icon-save',modal:true,draggable:false"
+style="width:700px;height:400px;">
+  <!-- 药厂信息 -->
+    <div style="margin:50px 0px 0px 100px;">
+      <div style="margin-bottom: 10px">
+        编&nbsp;&nbsp;&nbsp;号：<input id="CXFfactoryId" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        名&nbsp;&nbsp;&nbsp;称：<input id="CXFfactoryName" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        地&nbsp;&nbsp;&nbsp;址：<input id="CXFfactoryAddress" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        手机号：<input id="CXFfactoryPhone" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+    </div>
+    <div style="padding:30px 0px 0px 70px;">
+      <a href="javascript:XGFclick()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" style="width:178px">修改</a>
+      <a href="javascript:SCFclick()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" style="width:178px">删除</a>
+      <a href="javascript:QXFclick()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" style="width:178px" onclick="javascript:$('#GLFdialog').dialog('close')">取消</a>
+    </div>
+</div>
+
+<!-- 信息修改对话框 -->
+<div id="XGFdialog" class="easyui-dialog" style="width:500px"
+     closed="true" buttons="#dlg-buttons"
+     data-options="iconCls:'icon-edit',modal:true,draggable:false">
+  <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
+  <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">以下为可修改信息</div>
+    <div style="margin-bottom:10px">
+        药厂&nbsp;&nbsp;&nbsp;
+        地址：<input class="easyui-textbox" id="XGFfactoryAddress" style="width:78%;height: 23px"
+               data-options="multiline:true">
+    </div>
+    <div style="margin-bottom:10px">
+        药厂手机号：<input class="easyui-textbox" id="XGFfactoryPhone" style="width:78%;height: 23px"
+             data-options="multiline:true">
+    </div>
+  </form>
+</div>
+<div id="dlg-buttons">
+  <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="XGFsave()" style="width:90px">提交</a>
+  <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#XGFdialog').dialog('close')" style="width:90px">取消</a>
+</div>
+
+<script type="text/javascript">
+    var currentFactoryAddress;
+    var currentFactoryPhone;
+    function CXFIdclick() {
+        var factoryIdInput = $('#CXFId').textbox('getValue').replace(/\s*/g,'');
+        if(factoryIdInput == "") {
+            $.messager.alert('提示','编号不能为空','warning');
+            return;
+        }
+        $.post("../factory/getFactory", {
+        factoryId: factoryIdInput
+        }, function(data) {
+            if (data.code != 0){
+                $.messager.alert('提示',data.msg,'warning');
+                return ;
+            }
+            $('#GLFdialog').dialog('open');
+            $("#CXFfactoryId").textbox('setValue', data.data.factoryId);
+            $("#CXFfactoryName").textbox('setValue', data.data.factoryName);
+            $("#CXFfactoryAddress").textbox('setValue', data.data.factoryAddress);
+            $("#CXFfactoryPhone").textbox('setValue', data.data.factoryPhone);
+            currentFactoryAddress = data.data.factoryAddress;
+            currentFactoryPhone = data.data.factoryPhone;
+        });
+    }
+
+    function XGFclick() {
+        if(quanXian != 0 ){
+            $.messager.alert('提示','您没有权限使用此功能','error');
+            event.stopPropagation();
+        }
+        $('#XGFdialog').dialog('open');
+        $("#XGFfactoryAddress").textbox('setValue', currentFactoryAddress);
+        $("#XGFfactoryPhone").textbox('setValue', currentFactoryPhone);
+    }
+    function XGFsave() {
+        var factoryIdInput = $('#CXFId').textbox('getValue').replace(/\s*/g,'');
+        var XGfactoryAddressInput = $("#XGFfactoryAddress").textbox('getValue').replace(/\s*/g,'');
+        var XGfactoryPhoneInput = $("#XGFfactoryPhone").textbox('getValue').replace(/\s*/g,'');
+        if(XGfactoryAddressInput == "") {
+            $.messager.alert('提示','地址不能为空','warning');
+            return;
+        }
+        if(XGfactoryAddressInput.length >128) {
+            $.messager.alert('提示','地址不能超过128个字','warning');
+            return;
+        }
+        if(XGfactoryPhoneInput == "") {
+            $.messager.alert('提示','手机号不能为空','warning');
+            return;
+        }
+        if(XGfactoryPhoneInput.length != 11) {
+            $.messager.alert('提示','手机号必须是11位','warning');
+            return;
+        }
+        $.post('../factory/modifyFactory', {
+            factoryId:factoryIdInput,
+            factoryAddress:XGfactoryAddressInput,
+            factoryPhone:XGfactoryPhoneInput
+        }, function(data) {
+            if(data.code != 0) $.messager.alert('提示',data.msg,'error');
+            else {
+                $.messager.alert('提示','修改成功','info');
+                $('#XGFdialog').dialog('close');
+                $('#GLFdialog').dialog('close');
+            }
+        });
+    }
+
+    function SCFclick() {
+        if(quanXian != 0 ){
+            $.messager.alert('提示','您没有权限使用此功能','error');
+            event.stopPropagation();
+        }
+        var factoryIdInput = $('#CXFId').textbox('getValue').replace(/\s*/g,'');
+        $.messager.confirm('提示','确定删除该药厂信息吗?',function(r) {
+            if(r) {
+                $.post('../factory/destroyFactory',{
+                    factoryId : factoryIdInput
+                },function(data) {
+                    if(data.code != 0) $.messager.alert('提示',data.msg,'error');
+                    else {
+                        $.messager.alert('提示','删除成功','info');
+                        $('#GLFdialog').dialog('close');
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    var quanXian;
+    $(function() {
+        $.ajax({
+            url: '../../login/getLoginName',
+            success: function (data) {
+                if (data.code != 0) {
+                    $.messager.alert('', '<br>账号异常,请重新登陆', 'error', function () {
+                        location.href = "../login.html";
+                    });
+                }
+                $("#loginName").html(data.data.userName);
+                quanXian = data.data.quanXian;
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.messager.alert('', '<br>账号异常,请重新登陆', 'error', function () {
+                    location.href = "../login.html";
+                });
+            }
+        });
+    });
+</script>

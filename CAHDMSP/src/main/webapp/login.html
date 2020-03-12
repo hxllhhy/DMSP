@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+<title>长安医院药品管理服务平台</title>
+<link href="/resources/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<link rel="Shortcut Icon" href="/resources/images/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/resources/js/jquery-easyui-1.4/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/resources/js/jquery-easyui-1.4/themes/icon.css" />
+<script type="text/javascript" src="/resources/js/jquery-easyui-1.4/jquery.min.js"></script>
+<script type="text/javascript" src="/resources/js/jquery-easyui-1.4/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/resources/js/jquery-easyui-1.4/locale/easyui-lang-zh_CN.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body style="background-attachment: fixed;">
+<div class="login">
+	</h2>
+	<div class="login-top">
+		<h1>长安医院药品管理服务平台</h1>
+			<input type="text"  id="userName" placeholder="请输入用户名">
+			<input type="password"  id="passWord" placeholder="请输入密码">
+	    <div class="forgot">
+	    	<input type="submit" value="登录" onclick="login()">
+	    </div>
+	</div>
+	<div class="login-bottom">
+		
+	</div>
+</div>
+
+</body>
+<script type="text/javascript">
+	function login() {
+	    if($("#userName").val()=="") {
+	        $.messager.alert('提示','用户名不能为空','warning');
+		  	return;
+		}
+		if($("#passWord").val()=="") {
+	        $.messager.alert('提示','密码不能为空','warning');
+		  	return;
+		}
+
+		$.post('./login/loginUser', {
+			userName:$("#userName").val(),
+			passWord:$("#passWord").val()
+		}, function(data) {
+			/*optional stuff to do after success */
+			if(data.code != 0) $.messager.alert('提示',data.msg,'error');
+			else location.href = "/resources/index.html";
+		});
+	}
+</script>
+</html>

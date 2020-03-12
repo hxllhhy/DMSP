@@ -1,0 +1,162 @@
+<!-- 查询采购人信息 -->
+<div  style="margin: 2% 0px 0px 30%">
+  <div class="easyui-panel" title="采购人编号查询"
+  data-options="iconCls:'icon-search'"
+  style=" background:  #FFFFFF;
+    max-width:400px;padding:30px 60px;">
+    <div style="margin-bottom:20px">
+        <input id="CXBId" class="easyui-textbox"
+         labelPosition="top" 
+        data-options="prompt:'请输入采购人编号'"
+        style="width:100%;height:35px">
+    </div>
+    <!-- 查询按钮 -->
+    <div>
+        <a href="javascript:CXBIdclick()" class="easyui-linkbutton"
+        iconCls="icon-ok" style="width:100%">查询</a>
+    </div>
+  </div>
+</div>
+<!-- 查询结束 -->
+
+<!-- 信息管理对话框 -->
+<div class="easyui-dialog" title="采购人信息" closed="true" id="GLBdialog"
+data-options="iconCls:'icon-save',modal:true,draggable:false"
+style="width:700px;height:300px;">
+  <!-- 采购人信息 -->
+    <div style="margin:50px 0px 0px 100px">
+      <div style="margin-bottom: 10px">
+        编&nbsp;&nbsp;&nbsp;号：<input id="CXBbuyerId" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        姓&nbsp;&nbsp;&nbsp;名：<input id="CXBbuyerName" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        手机号：<input id="CXBbuyerPhone" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+    </div>
+    <div style="padding:30px 0px 0px 70px">
+      <a href="javascript:XGBclick()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" style="width:178px">修改</a>
+      <a href="javascript:SCBclick()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" style="width:178px">删除</a>
+      <a href="javascript:QXBclick()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" style="width:178px" onclick="javascript:$('#GLBdialog').dialog('close')">取消</a>
+    </div>
+</div>
+
+<!-- 信息修改对话框 -->
+<div id="XGBdialog" class="easyui-dialog" style="width:500px"
+     closed="true" buttons="#dlg-buttons"
+     data-options="iconCls:'icon-edit',modal:true,draggable:false">
+  <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
+  <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">以下为可修改信息</div>
+  <div style="margin-bottom:10px">
+      采购人手机号：<input class="easyui-textbox" id="XGBbuyerPhone" style="width:78%; height: 23px"
+             data-options="multiline:true">
+  </div>
+  </form>
+</div>
+<div id="dlg-buttons">
+  <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="XGBsave()" style="width:90px">提交</a>
+  <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#XGBdialog').dialog('close')" style="width:90px">取消</a>
+</div>
+
+<script type="text/javascript">
+    var currentBuyerPhone;
+    function CXBIdclick() {
+        var buyerIdInput = $('#CXBId').textbox('getValue').replace(/\s*/g,'');
+        if(buyerIdInput == "") {
+            $.messager.alert('提示','编号不能为空','warning');
+            return;
+        }
+        $.post("../buyer/getBuyer", {
+        buyerId: buyerIdInput
+        }, function(data) {
+            if (data.code != 0){
+                $.messager.alert('提示',data.msg,'warning');
+                return ;
+            }
+            $('#GLBdialog').dialog('open');
+            $("#CXBbuyerId").textbox('setValue', data.data.buyerId);
+            $("#CXBbuyerName").textbox('setValue', data.data.buyerName);
+            $("#CXBbuyerPhone").textbox('setValue', data.data.buyerPhone);
+            currentBuyerPhone = data.data.buyerPhone;
+        });
+    }
+
+    function XGBclick() {
+        if(quanXian != 0 ){
+            $.messager.alert('提示','您没有权限使用此功能','error');
+            event.stopPropagation();
+        }
+        $('#XGBdialog').dialog('open');
+        $("#XGBbuyerPhone").textbox('setValue', currentBuyerPhone);
+
+    }
+    function XGBsave() {
+        var buyerIdInput = $('#CXBId').textbox('getValue').replace(/\s*/g,'');
+        var XGbuyerPhoneInput = $("#XGBbuyerPhone").textbox('getValue').replace(/\s*/g,'');
+        if(XGbuyerPhoneInput == "") {
+            $.messager.alert('提示','手机号不能为空','warning');
+            return;
+        }
+        if(XGbuyerPhoneInput.length != 11) {
+            $.messager.alert('提示','手机号必须是11位','warning');
+            return;
+        }
+        $.post('../buyer/modifyBuyer', {
+            buyerId:buyerIdInput,
+            buyerPhone:XGbuyerPhoneInput
+        }, function(data) {
+            if(data.code != 0) $.messager.alert('提示',data.msg,'error');
+            else {
+                $.messager.alert('提示','修改成功','info');
+                $('#XGBdialog').dialog('close');
+                $('#GLBdialog').dialog('close');
+            }
+        });
+    }
+
+    function SCBclick() {
+        if(quanXian != 0 ){
+            $.messager.alert('提示','您没有权限使用此功能','error');
+            event.stopPropagation();
+        }
+        var buyerIdInput = $('#CXBId').textbox('getValue').replace(/\s*/g,'');
+        $.messager.confirm('提示','确定删除该采购人信息吗?',function(r) {
+            if(r) {
+                $.post('../buyer/destroyBuyer',{
+                    buyerId : buyerIdInput
+                },function(data) {
+                    if(data.code != 0) $.messager.alert('提示',data.msg,'error');
+                    else {
+                        $.messager.alert('提示','删除成功','info');
+                        $('#GLBdialog').dialog('close');
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+
+<script type="text/javascript">
+    var quanXian;
+    $(function() {
+        $.ajax({
+            url: '../../login/getLoginName',
+            success: function (data) {
+                if (data.code != 0) {
+                    $.messager.alert('', '<br>账号异常,请重新登陆', 'error', function () {
+                        location.href = "../login.html";
+                    });
+                }
+                $("#loginName").html(data.data.userName);
+                quanXian = data.data.quanXian;
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.messager.alert('', '<br>账号异常,请重新登陆', 'error', function () {
+                    location.href = "../login.html";
+                });
+            }
+        });
+    });
+</script>

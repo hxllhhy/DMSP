@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cah.cahdmsp.dao.FactoryDao">
+
+	<insert id="insertFactoryInfo" parameterType="Factory">
+		insert into tb_factory(factory_name, factory_address, factory_phone)
+			values(#{factoryName},#{factoryAddress},#{factoryPhone})
+	</insert>
+	<select id="queryAllFactoryInfo" resultType="Factory">
+		select * from tb_factory order by factory_id asc
+	</select>
+	<select id="queryFactoryInfoById" parameterType="Long" resultType="Factory">
+		select * from tb_factory where factory_id = #{factoryId}
+	</select>
+	<update id="updateFactoryInfoById">
+		update tb_factory set factory_address = #{factoryAddress},factory_phone = #{factoryPhone}
+			where factory_id = #{factoryId}
+	</update>
+	<delete id="deleteFactoryInfoById" parameterType="Long">
+		delete from tb_factory where factory_id = #{factoryId}
+	</delete>
+	<select id="queryDrugNumAboutFactoryById" parameterType="Long" resultType="Integer">
+		select count(*) from tb_drug where factory_id = #{factoryId}
+	</select>
+</mapper>

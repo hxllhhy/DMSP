@@ -1,0 +1,444 @@
+<!-- 查询药品信息 -->
+<div  style="margin: 2% 0px 0px 30%">
+  <div class="easyui-panel" title="药品编号查询"
+  data-options="iconCls:'icon-search'"
+  style=" background:  #FFFFFF;
+    max-width:400px;padding:30px 60px;">
+    <div style="margin-bottom:20px">
+        <input id="CXDId" class="easyui-textbox"
+         labelPosition="top" 
+        data-options="prompt:'请输入药品编号'"
+        style="width:100%;height:35px">
+    </div>
+    <!-- 查询按钮 -->
+    <div>
+        <a href="javascript:CXDIdclick()" class="easyui-linkbutton"
+        iconCls="icon-ok" style="width:100%">查询</a>
+    </div>
+  </div>
+</div>
+<!-- 查询结束 -->
+
+<!-- 信息管理对话框 -->
+<div class="easyui-dialog" title="药品信息" closed="true" id="GLDdialog"
+data-options="iconCls:'icon-save',modal:true,draggable:false"
+style="width:700px;height:686px">
+  <!-- 药品信息 -->
+    <div style="margin:20px 0px 0px 82px">
+      <div style="margin-bottom: 10px">
+        编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        号：<input id="CXDdrugId" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        称：<input id="CXDdrugName" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        格：<input id="CXDdrugPrice" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        库&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        存：<input id="CXDdrugNum" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        成&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        份：<input id="CXDchengFen" class="easyui-textbox" style="width: 75%; height: 44px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        状：<input id="CXDxingZhuang" class="easyui-textbox" style="width: 75%; height: 44px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        法：<input id="CXDyongFa" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        功&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        效：<input id="CXDgongXiao" class="easyui-textbox" style="width: 75%; height: 44px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        厂家&nbsp;&nbsp;&nbsp;
+        编号：<input id="CXDfactoryId" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        厂家&nbsp;&nbsp;&nbsp;
+        名称：<input id="CXDfactoryName" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        厂家&nbsp;&nbsp;&nbsp;
+        地址：<input id="CXDfactoryAddress" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        厂家手机号：<input id="CXDfactoryPhone" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        采购人编号：<input id="CXDbuyerId" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        采购人姓名：<input id="CXDbuyerName" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+      <div style="margin-bottom: 10px">
+        采购人手机：<input id="CXDbuyerPhone" class="easyui-textbox" style="width: 75%; height: 23px" data-options="disabled:true,multiline:true"/>
+      </div>
+    </div>
+    <div style="padding:20px 0px 0px 75px">
+      <a href="javascript:CKDclick()" class="easyui-linkbutton" data-options="iconCls:'icon-undo'" style="width:106px">出库</a>
+      <a href="javascript:RKDclick()" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" style="width:106px">入库</a>
+      <a href="javascript:XGDclick()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" style="width:106px">修改</a>
+      <a href="javascript:SCDclick()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" style="width:106px">删除</a>
+      <a href="javascript:QXFclick()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" style="width:106px" onclick="javascript:$('#GLDdialog').dialog('close')">取消</a>
+    </div>
+</div>
+
+<!-- 出库对话框 -->
+<div id="CKDdialog" class="easyui-dialog" style="width:400px"
+     closed="true" buttons="#ckdlg-buttons"
+     data-options="iconCls:'icon-undo',modal:true,draggable:false">
+  <form id="ckfm" method="post" novalidate style="margin:0;padding:20px 50px">
+    <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">出库</div>
+    <div style="margin-bottom:10px">
+      <input class="easyui-textbox" id="CKdrugNum" style="width:100%; height: 23px"
+             data-options="prompt:'请输入出库药品数',multiline:true">
+    </div>
+    <div style="margin-bottom:10px">
+      <input class="easyui-textbox" id="CKoutPatient" style="width:100%; height: 23px"
+             data-options="prompt:'请输入病人编号',multiline:true">
+    </div>
+  </form>
+</div>
+<div id="ckdlg-buttons">
+  <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="CKDsave()" style="width:90px">提交</a>
+  <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#CKDdialog').dialog('close')" style="width:90px">取消</a>
+</div>
+
+<!-- 入库对话框 -->
+<div id="RKDdialog" class="easyui-dialog" style="width:400px"
+     closed="true" buttons="#rkdlg-buttons"
+     data-options="iconCls:'icon-redo',modal:true,draggable:false">
+  <form id="rkfm" method="post" novalidate style="margin:0;padding:20px 50px">
+    <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">入库</div>
+    <div style="margin-bottom:10px">
+      <input class="easyui-textbox" id="RKdrugNum" style="width:100%; height: 23px"
+             data-options="prompt:'请输入要增加的药品数',multiline:true">
+    </div>
+  </form>
+</div>
+<div id="rkdlg-buttons">
+  <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="RKDsave()" style="width:90px">提交</a>
+  <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#RKDdialog').dialog('close')" style="width:90px">取消</a>
+</div>
+
+<!-- 修改对话框 -->
+<div id="XGDdialog" class="easyui-dialog" style="width:600px; height: 440px"
+     closed="true" buttons="#dlg-buttons"
+     data-options="iconCls:'icon-edit',modal:true,draggable:false">
+  <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
+  <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">以下为可修改信息</div>
+    <div style="margin-bottom:10px">
+      价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      格：<input class="easyui-textbox" id="XGDdrugPrice" style="width:81%; height: 23px"
+               data-options="multiline:true">
+    </div>
+    <div style="margin-bottom:10px">
+      成&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      份：<input class="easyui-textbox" id="XGDchengFen" style="width:81%; height: 44px"
+             data-options="multiline:true">
+    </div>
+    <div style="margin-bottom:10px">
+      性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      状：<input class="easyui-textbox" id="XGDxingZhuang" style="width:81%; height: 44px"
+             data-options="multiline:true">
+    </div>
+    <div style="margin-bottom:10px">
+      用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      法：<input class="easyui-textbox" id="XGDyongFa" style="width:81%; height: 23px"
+             data-options="multiline:true">
+    </div>
+    <div style="margin-bottom:10px">
+      功&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      效：<input class="easyui-textbox" id="XGDgongXiao" style="width:81%; height: 44px"
+             data-options="multiline:true">
+    </div>
+    <div style="margin-bottom:10px">
+      厂家&nbsp;&nbsp;&nbsp;
+      编号：<input class="easyui-textbox" id="XGDfactoryId" style="width:81%; height: 23px"
+             data-options="multiline:true">
+    </div>
+    <div style="margin-bottom:10px">
+      采购人编号：
+      <input class="easyui-textbox" id="XGDbuyerId" style="width:81%; height: 23px"
+             data-options="multiline:true">
+    </div>
+  </form>
+</div>
+<div id="dlg-buttons">
+  <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="XGDsave()" style="width:90px">提交</a>
+  <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#XGDdialog').dialog('close')" style="width:90px">取消</a>
+</div>
+
+<script type="text/javascript">
+    var currentDrugName;
+    var currentDrugPrice;
+    var currentDrugNum;
+    var currentChengFen;
+    var currentXingZhuang;
+    var currentYongFa;
+    var currentGongXiao;
+    var currentFactoryId;
+    var currentBuyerId;
+
+
+    function CXDIdclick() {
+        if(drugIdInput == "") {
+            $.messager.alert('提示','编号不能为空','warning');
+            return;
+        }
+        var drugIdInput = $('#CXDId').textbox('getValue').replace(/\s*/g,'');
+        $.post("../drug/getDrug", {
+        drugId: drugIdInput
+        }, function(data) {
+            if (data.code != 0){
+                $.messager.alert('提示',data.msg,'warning');
+                return ;
+            }
+            $('#GLDdialog').dialog('open');
+            $("#CXDdrugId").textbox('setValue', data.data.drugId);
+            $("#CXDdrugName").textbox('setValue', data.data.drugName);
+            $("#CXDdrugPrice").textbox('setValue', data.data.drugPrice+'');
+            $("#CXDdrugNum").textbox('setValue', data.data.drugNum+'');
+            $("#CXDchengFen").textbox('setValue', data.data.chengFen);
+            $("#CXDxingZhuang").textbox('setValue', data.data.xingZhuang);
+            $("#CXDyongFa").textbox('setValue', data.data.yongFa);
+            $("#CXDgongXiao").textbox('setValue', data.data.gongXiao);
+            $("#CXDfactoryId").textbox('setValue', data.data.factory.factoryId);
+            $("#CXDfactoryName").textbox('setValue', data.data.factory.factoryName);
+            $("#CXDfactoryAddress").textbox('setValue', data.data.factory.factoryAddress);
+            $("#CXDfactoryPhone").textbox('setValue', data.data.factory.factoryPhone);
+            $("#CXDbuyerId").textbox('setValue', data.data.buyer.buyerId);
+            $("#CXDbuyerName").textbox('setValue', data.data.buyer.buyerName);
+            $("#CXDbuyerPhone").textbox('setValue', data.data.buyer.buyerPhone);
+            currentDrugName = data.data.drugName;
+            currentDrugPrice = data.data.drugPrice;
+            currentDrugNum = data.data.drugNum;
+            currentChengFen = data.data.chengFen;
+            currentXingZhuang = data.data.xingZhuang;
+            currentYongFa = data.data.yongFa;
+            currentGongXiao = data.data.gongXiao;
+            currentFactoryId = data.data.factory.factoryId;
+            currentBuyerId = data.data.buyer.buyerId;
+        });
+    }
+
+    function CKDclick() {
+        if(quanXian == 0 ){
+            $.messager.alert('提示','您没有权限使用此功能','error');
+            event.stopPropagation();
+        }
+        $('#CKDdialog').dialog('open');
+    }
+    function CKDsave() {
+        var CKdrugNumInput = $("#CKdrugNum").textbox('getValue').replace(/\s*/g,'');
+        var CKoutPatientInput = $("#CKoutPatient").textbox('getValue').replace(/\s*/g,'');
+        if(CKdrugNumInput == "") {
+            $.messager.alert('提示','出库数不能为空','warning');
+            return;
+        }
+        if(CKdrugNumInput <= 0) {
+            $.messager.alert('提示','出库数必须大于0','warning');
+            return;
+        }
+        if(CKdrugNumInput > currentDrugNum) {
+            $.messager.alert('提示','出库数不能超过当前库存数','warning');
+            return;
+        }
+        var drugIdInput = $('#CXDId').textbox('getValue').replace(/\s*/g,'');
+        $.post('../drug/outDrug', {
+            drugId:drugIdInput,
+            drugNum:CKdrugNumInput,
+            outPatient:CKoutPatientInput,
+            drugName:currentDrugName,
+            drugPrice:currentDrugPrice
+        }, function(data) {
+            if(data.code != 0) $.messager.alert('提示',data.msg,'error');
+            else {
+                $.messager.alert('提示','出库成功','info');
+                $('#CKDdialog').dialog('close');
+                $('#GLDdialog').dialog('close');
+            }
+        });
+    }
+
+    function RKDclick() {
+        if(quanXian != 0 ){
+            $.messager.alert('提示','您没有权限使用此功能','error');
+            event.stopPropagation();
+        }
+        $('#RKDdialog').dialog('open');
+    }
+    function RKDsave() {
+        var RKdrugNumInput = $("#RKdrugNum").textbox('getValue').replace(/\s*/g,'');
+        if(RKdrugNumInput == "") {
+            $.messager.alert('提示','入库数不能为空','warning');
+            return;
+        }
+        if(RKdrugNumInput <= 0) {
+            $.messager.alert('提示','入库数必须大于0','warning');
+            return;
+        }
+        var drugIdInput = $('#CXDId').textbox('getValue').replace(/\s*/g,'');
+        $.post('../drug/inDrug', {
+            drugId:drugIdInput,
+            drugNum:RKdrugNumInput,
+            drugName:currentDrugName,
+            drugPrice:currentDrugPrice
+        }, function(data) {
+            if(data.code != 0) $.messager.alert('提示',data.msg,'error');
+            else {
+                $.messager.alert('提示','入库成功','info');
+                $('#RKDdialog').dialog('close');
+                $('#GLDdialog').dialog('close');
+            }
+        });
+    }
+
+    function XGDclick() {
+        if(quanXian != 0 ){
+            $.messager.alert('提示','您没有权限使用此功能','error');
+            event.stopPropagation();
+        }
+        $('#XGDdialog').dialog('open');
+        $("#XGDdrugPrice").textbox('setValue', currentDrugPrice+'');
+        $("#XGDchengFen").textbox('setValue', currentChengFen);
+        $("#XGDxingZhuang").textbox('setValue', currentXingZhuang);
+        $("#XGDyongFa").textbox('setValue', currentYongFa);
+        $("#XGDgongXiao").textbox('setValue', currentGongXiao);
+        $("#XGDfactoryId").textbox('setValue', currentFactoryId);
+        $("#XGDbuyerId").textbox('setValue', currentBuyerId);
+    }
+    function XGDsave() {
+        var XGdrugPriceInput = $("#XGDdrugPrice").textbox('getValue').replace(/\s*/g,'');
+        var XGchengFenInput = $("#XGDchengFen").textbox('getValue').replace(/\s*/g,'');
+        var XGxingZhuangInput = $("#XGDxingZhuang").textbox('getValue').replace(/\s*/g,'');
+        var XGyongFaInput = $("#XGDyongFa").textbox('getValue').replace(/\s*/g,'');
+        var XGgongXiaoInput = $("#XGDgongXiao").textbox('getValue').replace(/\s*/g,'');
+        var XGfactoryIdInput = $("#XGDfactoryId").textbox('getValue').replace(/\s*/g,'');
+        var XGbuyerIdInput = $("#XGDbuyerId").textbox('getValue').replace(/\s*/g,'');
+
+        if(XGdrugPriceInput == "") {
+            $.messager.alert('提示','单价不能为空','warning');
+            return;
+        }
+        if(XGdrugPriceInput <= 0) {
+            $.messager.alert('提示','单价必须大于0','warning');
+            return;
+        }
+        if(XGchengFenInput == "") {
+            $.messager.alert('提示','成份不能为空','warning');
+            return;
+        }
+        if(XGchengFenInput.length > 128) {
+            $.messager.alert('提示','成份不能超过128个字','warning');
+            return;
+        }
+        if(XGxingZhuangInput == "") {
+            $.messager.alert('提示','性状不能为空','warning');
+            return;
+        }
+        if(XGxingZhuangInput.length > 128) {
+            $.messager.alert('提示','性状不能超过128个字','warning');
+            return;
+        }
+        if(XGyongFaInput == "") {
+            $.messager.alert('提示','用法不能为空','warning');
+            return;
+        }
+        if(XGyongFaInput.length > 128) {
+            $.messager.alert('提示','用法不能超过128个字','warning');
+            return;
+        }
+        if(XGgongXiaoInput == "") {
+            $.messager.alert('提示','功效不能为空','warning');
+            return;
+        }
+        if(XGgongXiaoInput.length > 512) {
+            $.messager.alert('提示','功效不能超过512个字','warning');
+            return;
+        }
+        if(XGfactoryIdInput == "") {
+            $.messager.alert('提示','厂家编号不能为空','warning');
+            return;
+        }
+        if(XGbuyerIdInput == "") {
+            $.messager.alert('提示','采购人编号不能为空','warning');
+            return;
+        }
+        var drugIdInput = $('#CXDId').textbox('getValue').replace(/\s*/g,'');
+        $.post('../drug/modifyDrug', {
+            drugId:drugIdInput,
+            drugPrice:XGdrugPriceInput,
+            chengFen:XGchengFenInput,
+            xingZhuang:XGxingZhuangInput,
+            yongFa:XGyongFaInput,
+            gongXiao:XGgongXiaoInput,
+            factoryId:XGfactoryIdInput,
+            buyerId:XGbuyerIdInput
+        }, function(data) {
+            if(data.code != 0) $.messager.alert('提示',data.msg,'error');
+            else {
+                $.messager.alert('提示','修改成功','info');
+                $('#XGDdialog').dialog('close');
+                $('#GLDdialog').dialog('close');
+            }
+        });
+    }
+
+    function SCDclick() {
+        if(quanXian != 0 ){
+            $.messager.alert('提示','您没有权限使用此功能','error');
+            event.stopPropagation();
+        }
+        if(currentDrugNum > 0) {
+            $.messager.alert('提示','库存大于0不可以删除','info');
+            return;
+        } else {
+            var drugIdInput = $('#CXDId').textbox('getValue').replace(/\s*/g, '');
+            $.messager.confirm('提示', '确定删除该药品信息吗?', function (r) {
+                if (r) {
+                    $.post('../drug/destroyDrug', {
+                        drugId: drugIdInput
+                    }, function (data) {
+                        if (data.code != 0) $.messager.alert('提示', data.msg, 'error');
+                        else {
+                            $.messager.alert('提示', '删除成功', 'info');
+                            $('#GLDdialog').dialog('close');
+                        }
+                    });
+                }
+            });
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    var quanXian;
+    $(function() {
+        $.ajax({
+            url: '../../login/getLoginName',
+            success: function (data) {
+                if (data.code != 0) {
+                    $.messager.alert('', '<br>账号异常,请重新登陆', 'error', function () {
+                        location.href = "../login.html";
+                    });
+                }
+                $("#loginName").html(data.data.userName);
+                quanXian = data.data.quanXian;
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.messager.alert('', '<br>账号异常,请重新登陆', 'error', function () {
+                    location.href = "../login.html";
+                });
+            }
+        });
+    });
+</script>

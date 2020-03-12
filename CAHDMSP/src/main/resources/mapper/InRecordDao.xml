@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cah.cahdmsp.dao.InrecordDao">
+
+	<select id="queryAllInrecord" resultType="Inrecord">
+		select * from tb_in order by inrecord_id asc
+ 	</select>
+	<insert id="insertInrecord" parameterType="Inrecord">
+	insert into tb_in(indrug_id,indrug_name,indrug_num,indrug_priceall,in_time)
+		values (#{indrugId},#{indrugName},#{indrugNum},#{indrugPriceall},#{inTime})
+	</insert>
+
+</mapper>

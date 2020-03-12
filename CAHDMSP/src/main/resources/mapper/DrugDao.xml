@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cah.cahdmsp.dao.DrugDao">
+	<resultMap id="DrugMap" type="Drug">
+		<id column="drug_id" property="drugId"/>
+		<result column="drug_name" property="drugName"/>
+		<result column="drug_price" property="drugPrice"/>
+		<result column="drug_num" property="drugNum"/>
+		<result column="cheng_fen" property="chengFen"/>
+		<result column="xing_zhuang" property="xingZhuang"/>
+		<result column="yong_fa" property="yongFa"/>
+		<result column="gong_xiao" property="gongXiao"/>
+		<association property="factory" javaType="Factory">
+			<id column="factory_id" property="factoryId"/>
+			<result column="factory_name" property="factoryName"/>
+			<result column="factory_address" property="factoryAddress"/>
+			<result column="factory_phone" property="factoryPhone"/>
+		</association>
+		<association property="buyer" javaType="Buyer">
+			<id column="buyer_id" property="buyerId"/>
+			<result column="buyer_name" property="buyerName"/>
+			<result column="buyer_phone" property="buyerPhone"/>
+		</association>
+	</resultMap>
+
+	<insert id="insertDrugInfo" parameterType="Drug"  useGeneratedKeys="true" keyProperty="drugId" keyColumn="drug_id">
+		insert into tb_drug(drug_name, drug_price, drug_num, cheng_fen,
+			xing_zhuang, yong_fa, gong_xiao, factory_id, buyer_id)
+			values (#{drugName},#{drugPrice},#{drugNum},#{chengFen},#{xingZhuang},
+					#{yongFa},#{gongXiao},#{factory.factoryId},#{buyer.buyerId})
+	</insert>
+
+	<select id="queryAllDrugInfo" resultMap="DrugMap">
+		select d.drug_id,d.drug_name,d.drug_price,d.drug_num,
+			d.cheng_fen,d.xing_zhuang,d.yong_fa,d.gong_xiao,
+			f.factory_name,b.buyer_name
+			from tb_drug d,tb_factory f,tb_buyer b
+			where d.factory_id = f.factory_id
+			and d.buyer_id = b.buyer_id
+			order by d.drug_id asc
+	</select>
+
+	<select id="queryDrugInfoById" parameterType="Long" resultMap="DrugMap">
+		select d.drug_id,d.drug_name,d.drug_price,d.drug_num,
+			d.cheng_fen,d.xing_zhuang,d.yong_fa,d.gong_xiao,
+			f.factory_id,f.factory_name,f.factory_address,f.factory_phone,
+			b.buyer_id,b.buyer_name,b.buyer_phone
+			from tb_drug d
+			left join tb_factory f on d.factory_id = f.factory_id
+			left join tb_buyer b on d.buyer_id = b.buyer_id
+			where drug_id = #{drugId}
+	</select>
+
+	<delete id="deleteDrugInfoById" parameterType="Long" >
+		delete from tb_drug where drug_id = #{drugId}
+	</delete>
+
+	<update id="updateDrugInfoById">
+		update tb_drug set
+			drug_price = #{drugPrice},cheng_fen = #{chengFen},
+			xing_zhuang = #{xingZhuang},yong_fa = #{yongFa},gong_xiao = #{gongXiao},
+			factory_id = #{factoryId},buyer_id = #{buyerId}
+		where drug_id = #{drugId}
+	</update>
+
+	<update id="outDrugNumById">
+		update tb_drug set drug_num = (drug_num - #{drugNum}) where drug_id = #{drugId}
+	</update>
+
+	<update id="inDrugNumById">
+		update tb_drug set drug_num = (drug_num + #{drugNum}) where drug_id = #{drugId}
+	</update>
+</mapper>

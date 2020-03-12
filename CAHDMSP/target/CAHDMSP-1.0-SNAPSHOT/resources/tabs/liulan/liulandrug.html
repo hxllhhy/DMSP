@@ -1,0 +1,35 @@
+<!-- 浏览药品信息 -->
+<table class="easyui-datagrid" data-options="striped:true,pagination:true,
+         url:'../drug/showAllDrug',pageSize:5,pageList:[5,10,15]" style="width: 86%">
+    <thead>
+        <tr>
+            <th data-options="field:'drugId',formatter:showText" width=5%>药品编号</th>
+            <th data-options="field:'drugName',formatter:showText" width=10%>药品名称</th>
+            <th data-options="field:'drugPrice',formatter:showText" width=3%>单价</th>
+            <th data-options="field:'drugNum',formatter:showText" width=4%>库存</th>
+            <th data-options="field:'chengFen',formatter:showText" width=16%>成份</th>
+            <th data-options="field:'xingZhuang',formatter:showText" width=10%>性状</th>
+            <th data-options="field:'yongFa'" width=10%>用法</th>
+            <th data-options="field:'gongXiao',formatter:showText" width=20%>功效</th>
+            <th data-options="field:'factoryName',formatter:getFactoryName" width=19%>厂家</th>
+            <th data-options="field:'buyerName',formatter:getBuyerName" width=4%>采购人</th>
+        </tr>
+      </thead>
+</table>
+
+<script>
+    function showText(value) {
+		return '<div style="width=100px;word-break:break-all; word-wrap:break-word;white-space:pre-wrap;">'+value+'</div>';
+    }
+</script>
+<script type="text/javascript">
+    function getFactoryName(value,row) {
+        return row.factory.factoryName;
+    }
+</script>
+
+<script type="text/javascript">
+    function getBuyerName(value,row) {
+        return row.buyer.buyerName;
+    }
+</script>

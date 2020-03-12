@@ -1,0 +1,68 @@
+<div  style="margin: 2% 0px 0px 30%">
+  <div class="easyui-panel" title="采购人信息录入"
+       data-options="iconCls:'icon-group'"
+       style=" background:  #FFFFFF;
+    max-width:400px;padding:30px 60px;">
+    <!-- 录入按钮 -->
+    <div>
+      <a href="javascript:LRBclick()" class="easyui-linkbutton"
+         iconCls="icon-ok" style="width:100%">点我录入</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- 录入信息对话框 -->
+<div id="LRBdialog" class="easyui-dialog" style="width:500px"
+     closed="true" buttons="#dlg-buttons"
+     data-options="iconCls:'icon-save',modal:true,draggable:false">
+  <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
+  <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">录入采购人信息</div>
+    <div style="margin-bottom:10px">
+      采购人&nbsp;&nbsp;&nbsp;姓名：<input class="easyui-textbox" id="LRbuyerName" style="width:78%; height: 23px">
+    </div>
+    <div style="margin-bottom:10px">
+      采购人手机号：<input class="easyui-textbox" id="LRbuyerPhone" style="width:78%; height: 23px">
+    </div>
+  </form>
+</div>
+<div id="dlg-buttons">
+  <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="LRBsave()" style="width:90px">提交</a>
+  <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#LRBdialog').dialog('close')" style="width:90px">取消</a>
+</div>
+
+<script type="text/javascript">
+    function LRBclick() {
+        $('#LRBdialog').dialog('open');
+    }
+    function LRBsave() {
+        var LRbuyerNameInput = $("#LRbuyerName").textbox('getValue').replace(/\s*/g,'');
+        var LRbuyerPhoneInput = $("#LRbuyerPhone").textbox('getValue').replace(/\s*/g,'');
+        if(LRbuyerNameInput == "") {
+            $.messager.alert('提示','姓名不能为空','warning');
+            return;
+        }
+        if(LRbuyerNameInput.length > 12) {
+            $.messager.alert('提示','姓名不能超过12个字','warning');
+            return;
+        }
+        if(LRbuyerPhoneInput == "") {
+            $.messager.alert('提示','手机号不能为空','warning');
+            return;
+        }
+        if(LRbuyerPhoneInput.length != 11) {
+            $.messager.alert('提示','手机号必须是11位','warning');
+            return;
+        }
+        $.post('../buyer/enterBuyer', {
+            buyerName:LRbuyerNameInput,
+            buyerPhone:LRbuyerPhoneInput
+        }, function(data) {
+            if(data.code != 0) $.messager.alert('提示',data.msg,'error');
+            else {
+                $.messager.alert('提示','录入成功','info');
+                $('#LRBdialog').dialog('close');
+            }
+        });
+    }
+</script>

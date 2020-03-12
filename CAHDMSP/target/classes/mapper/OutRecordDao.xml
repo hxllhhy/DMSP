@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cah.cahdmsp.dao.OutrecordDao">
+
+	<select id="queryAllOutrecord" resultType="Outrecord">
+		select * from tb_out order by outrecord_id asc
+ 	</select>
+	<insert id="insertOutrecord" parameterType="Outrecord">
+	insert into tb_out(outdrug_id,outdrug_name,outdrug_num,outdrug_priceall,out_time,out_patient)
+		values (#{outdrugId},#{outdrugName},#{outdrugNum},#{outdrugPriceall},#{outTime},#{outPatient})
+	</insert>
+
+</mapper>
